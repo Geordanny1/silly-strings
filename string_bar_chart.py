@@ -1,8 +1,10 @@
 #! /usr/bin/env python3
 
-import sys, pprint
+import sys
+import pprint
+import collections
 
-def main():
+def main() -> None:
     argument_length = len(sys.argv)
 
     if argument_length < 2:
@@ -16,19 +18,26 @@ def main():
     pprint.pp(chart)
 
 def chartifizer(string: str) -> dict:
+    """
+    Get a string and returns a dictionary of in the form: dict = { 'letter' : ['Individual_apperence_of_the_letter'] }
+    Every character is convert to lower case and white space are ommited
+    """
   
     character_list = list(string)
 
     chart = {}
 
     for character in  character_list:
+        lower_case_character = character.lower()
         if character != " ":
-            if character not in chart.keys():
-                chart[character] = []
+            if lower_case_character not in chart.keys():
+                chart[lower_case_character] = []
 
-            chart[character] += [character]
+            chart[lower_case_character] += [lower_case_character]
 
-    return chart
+    order_chart = collections.OrderedDict(sorted(chart.items()))
+
+    return order_chart
 
 
 
